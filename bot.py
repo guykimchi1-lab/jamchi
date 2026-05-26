@@ -1,4 +1,5 @@
 import os
+import time
 from telegram import Update
 from telegram.ext import Application, MessageHandler, filters, ContextTypes
 from cryptography.fernet import Fernet
@@ -66,9 +67,10 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 def main():
+    time.sleep(5)
     app = Application.builder().token(BOT_TOKEN).build()
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
-    app.run_polling()
+    app.run_polling(drop_pending_updates=True)
 
 
 if __name__ == "__main__":
